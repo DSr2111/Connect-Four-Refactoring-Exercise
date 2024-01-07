@@ -12,6 +12,36 @@ class Game {
       board.push(Array.from({ length: width }));
     }
   }
+
+  makeHtmlBoard() {
+    const board = document.getElementById("board");
+
+    // make column tops (clickable area for adding a piece to that column)
+    const top = document.createElement("tr");
+    top.setAttribute("id", "column-top");
+    top.addEventListener("click", handleClick);
+
+    for (let x = 0; x < WIDTH; x++) {
+      const headCell = document.createElement("td");
+      headCell.setAttribute("id", x);
+      top.append(headCell);
+    }
+
+    board.append(top);
+
+    // make main part of board
+    for (let y = 0; y < HEIGHT; y++) {
+      const row = document.createElement("tr");
+
+      for (let x = 0; x < WIDTH; x++) {
+        const cell = document.createElement("td");
+        cell.setAttribute("id", `${y}-${x}`);
+        row.append(cell);
+      }
+
+      board.append(row);
+    }
+  }
 }
 
 const WIDTH = 7;
@@ -31,36 +61,6 @@ function makeBoard() {
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
-
-function makeHtmlBoard() {
-  const board = document.getElementById("board");
-
-  // make column tops (clickable area for adding a piece to that column)
-  const top = document.createElement("tr");
-  top.setAttribute("id", "column-top");
-  top.addEventListener("click", handleClick);
-
-  for (let x = 0; x < WIDTH; x++) {
-    const headCell = document.createElement("td");
-    headCell.setAttribute("id", x);
-    top.append(headCell);
-  }
-
-  board.append(top);
-
-  // make main part of board
-  for (let y = 0; y < HEIGHT; y++) {
-    const row = document.createElement("tr");
-
-    for (let x = 0; x < WIDTH; x++) {
-      const cell = document.createElement("td");
-      cell.setAttribute("id", `${y}-${x}`);
-      row.append(cell);
-    }
-
-    board.append(row);
-  }
-}
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
