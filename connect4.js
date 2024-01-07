@@ -42,6 +42,29 @@ class Game {
       board.append(row);
     }
   }
+
+  findSpotForCol(x) {
+    for (let y = HEIGHT - 1; y >= 0; y--) {
+      if (!board[y][x]) {
+        return y;
+      }
+    }
+    return null;
+  }
+
+  placeInTable(y, x) {
+    const piece = document.createElement("div");
+    piece.classList.add("piece");
+    piece.classList.add(`p${currPlayer}`);
+    piece.style.top = -50 * (y + 2);
+
+    const spot = document.getElementById(`${y}-${x}`);
+    spot.append(piece);
+  }
+
+  endGame(msg) {
+    alert(msg);
+  }
 }
 
 const WIDTH = 7;
@@ -54,42 +77,11 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
  *   board = array of rows, each row is array of cells  (board[y][x])
  */
 
-function makeBoard() {
-  for (let y = 0; y < HEIGHT; y++) {
-    board.push(Array.from({ length: WIDTH }));
-  }
-}
-
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
-function findSpotForCol(x) {
-  for (let y = HEIGHT - 1; y >= 0; y--) {
-    if (!board[y][x]) {
-      return y;
-    }
-  }
-  return null;
-}
-
 /** placeInTable: update DOM to place piece into HTML table of board */
-
-function placeInTable(y, x) {
-  const piece = document.createElement("div");
-  piece.classList.add("piece");
-  piece.classList.add(`p${currPlayer}`);
-  piece.style.top = -50 * (y + 2);
-
-  const spot = document.getElementById(`${y}-${x}`);
-  spot.append(piece);
-}
-
-/** endGame: announce game end */
-
-function endGame(msg) {
-  alert(msg);
-}
 
 /** handleClick: handle click of column top to play piece */
 
